@@ -12,6 +12,8 @@ class MealsDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title:  Text(meal.title),
+                backgroundColor: const Color.fromRGBO(17, 109, 110, 1),
+
       ),
     );
   }

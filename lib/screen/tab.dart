@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/screen/category.dart';
+import 'package:meals_app/screen/filter.dart';
 import 'package:meals_app/screen/meals.dart';
+import 'package:meals_app/widgets/main_drawer.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -19,20 +21,34 @@ class _TabScreenState extends State<TabScreen> {
     });
   }
 
+  void setScreen(String identifier) {
+     Navigator.of(context).pop();
+    if (identifier == 'filter') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const FilterScreen(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget activePage = const CategoryScreen();
     var activePageTitle = 'Category';
 
     if (_selectedPageIndex == 1) {
-      activePage =  MealsScreen(meals: []);
+      activePage = const MealsScreen(meals: []);
       activePageTitle = ' Your Favroites';
     }
 
     return Scaffold(
       appBar: AppBar(
         title: Text(activePageTitle),
-       backgroundColor: const Color.fromRGBO(17, 109, 110, 1),
+        backgroundColor: const Color.fromRGBO(17, 109, 110, 1),
+      ),
+      drawer: MainDrawer(
+        onSelectScreen: setScreen,
       ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
@@ -40,8 +56,13 @@ class _TabScreenState extends State<TabScreen> {
         currentIndex: _selectedPageIndex,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.category), label: 'Category'),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favroite')
+            icon: Icon(Icons.category),
+            label: 'Category',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Favroite',
+          )
         ],
       ),
     );
